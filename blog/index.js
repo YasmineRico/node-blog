@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 const app = new express();
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser:
+true}
 
 // EJS Template engine
 const ejs = require('ejs');
