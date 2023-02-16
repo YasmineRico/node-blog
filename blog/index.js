@@ -13,16 +13,16 @@ app.listen(4000, ()=>{
 })
 
 app.get('/', (req,res)=>{
-    res.sendFile(path.resolve(__dirname, 'views/index.html'))
+    res.render('index');
 })
 
 app.get('/contact', (req,res)=>{
-    res.sendFile(path.resolve(__dirname, 'views/contact.html'))
+    res.render('contact');
 })
 app.get('/about', (req,res)=>{
-    res.sendFile(path.resolve(__dirname, 'views/about.html'))
+    res.render('about');
 })
 
 app.get('/post', (req,res)=>{
-    res.sendFile(path.resolve(__dirname, 'views/post.html'))
+    res.render('post');
 })
