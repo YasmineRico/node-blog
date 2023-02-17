@@ -3,7 +3,7 @@ const path = require('path');
 const app = new express();
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser:
-true}
+true});
 
 // EJS Template engine
 const ejs = require('ejs');
@@ -29,3 +29,7 @@ app.get('/about', (req,res)=>{
 app.get('/post', (req,res)=>{
     res.render('post');
 })
+
+app.get('/posts/new',(req,res)=>{
+    res.render('create')
+});
