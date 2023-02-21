@@ -5,38 +5,34 @@ const app = new express();
 const ejs = require('ejs');
 const BlogPost= require('./models/BlogPost.js')
 
-const MongoClient= require('mongodb').MongoClient;
-const uri = 'mongodb://localhost:27017/mydb';
-const client = new MongoClient(uri, {useNewUrlParser: true});
 
-client.connect()
-    .then(()=>{
-        console.log('Connected to MongoDB');
-    })
-    .catch((err)=>{
-        console.log(err);
-    });
 
 const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser:
 true});
 
-const db = client.db('mydb');
-const collection = db.collection('users');
 
 
 app.set('view engine', 'ejs');
 
+//Middleware
 app.use(express.static('public'));
+//Body Parsing middleware
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 
 app.listen(4000, ()=>{
     console.log('App listening on port 4000')
 })
 
-app.get('/', (req,res)=>{
-    res.render('index');
+app.get('/',async (req,res)=>{
+    const blogposts = await BlogPost.find({})
+    res.render('index',{
+        blogposts
+    });
+    console.log(blogposts)
 })
 
 app.get('/contact', (req,res)=>{
@@ -54,3 +50,10 @@ app.get('/posts/new',(req,res)=>{
     res.render('create')
 });
 
+app.post('/posts/store',async (req,res)=>{
+    console.log(req.body);
+    
+    await BlogPost.create(req.body);
+    console.log(BlogPost)
+    res.redirect('/');
+});
